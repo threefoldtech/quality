@@ -1,4 +1,6 @@
 #!/bin/bash
+# This flist has : ubuntu 16.04, js(development), most of test suite requirements library, zerotier
+
 set -ex
 
 # make output directory
@@ -40,4 +42,4 @@ service zerotier-one start
 # change root password
 usermod --password xTremX root
 
-tar -cpzf "/tmp/archives/jumpscale_simple.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc  /
+tar -cpzf "/tmp/archives/testing_flist.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc  /
