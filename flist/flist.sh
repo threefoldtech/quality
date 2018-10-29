@@ -1,5 +1,6 @@
 #!/bin/bash
-# This flist has : ubuntu 16.04, js(development), most of test suite requirements library, zerotier
+# This flist has : 
+#    ubuntu 16.04, js(development), most of test suite requirements library, zerotier
 
 set -ex
 
