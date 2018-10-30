@@ -45,6 +45,6 @@ usermod --password xTremX root
 
 # create bootable
 echo "kernel: /boot/vmlinuz-4.4.0-21-generic" > /boot/boot.yaml
-echot "initrd: /boot/initrd.img-4.4.0-21-generic" >> /boot/boot.yaml
+echo "initrd: /boot/initrd.img-4.4.0-21-generic" >> /boot/boot.yaml
 
 tar -cpzf "/tmp/archives/testing_flist.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc  /
