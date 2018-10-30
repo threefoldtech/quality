@@ -37,8 +37,8 @@ curl https://raw.githubusercontent.com/threefoldtech/jumpscale_core/$JUMPSCALEBR
 pip3 install nose nose-progressive nose-testconfig sphinx sphinx-rtd-theme parameterized rednose
 
 # Install zerotier
-(curl -s https://install.zerotier.com/ | sudo bash) || true
-service zerotier-one start
+#(curl -s https://install.zerotier.com/ | sudo bash) || true
+#service zerotier-one start
 
 # change root password
 usermod --password xTremX root
