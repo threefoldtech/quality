@@ -44,7 +44,6 @@ pip3 install nose nose-progressive nose-testconfig sphinx sphinx-rtd-theme param
 usermod --password xTremX root
 
 # create bootable
-mkdir /boot
 echo "kernel: /boot/vmlinuz-4.4.0-21-generic" > /boot/boot.yaml
 echot "initrd: /boot/initrd.img-4.4.0-21-generic" >> /boot/boot.yaml
 
