@@ -1,0 +1,2 @@
+kernel: /boot/vmlinuz-4.4.0-21-generic
+initrd: /boot/initrd.img-4.4.0-21-generic
