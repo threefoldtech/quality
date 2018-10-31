@@ -13,7 +13,7 @@ mkdir -p $ARCHIVE
 apt-get update
 apt-get install -y --force-yes curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev
 DEBIAN_FRONTEND=noninteractive apt-get install -y linux-headers-4.4.0-109 linux-headers-4.4.0-109-generic linux-headers-generic linux-image-4.4.0-109-generic linux-image-extra-4.4.0-109-generic linux-image-generic linux-tools-4.4.0-109 linux-tools-4.4.0-109-generic linux-tools-generic
-DEBIAN_FRONTEND=noninteractive apt-get insatll -y  systemd-sysv systemd
+DEBIAN_FRONTEND=noninteractive apt-get install -y  systemd-sysv systemd
 
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
