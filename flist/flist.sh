@@ -11,7 +11,7 @@ mkdir -p $ARCHIVE
 
 # install system deps
 apt-get update
-apt-get install -y curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev linux-image
+apt-get install -y curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev linux-image-extra-4.15.0-1005-azure-edge
 
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
