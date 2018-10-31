@@ -25,6 +25,32 @@ ssh-keygen -f ~/.ssh/id_rsa -P ''
 eval `ssh-agent -s`
 ssh-add ~/.ssh/id_rsa
 
+# test
+mkdir -p /etc/initramfs-tools
+mkdir -p /etc/network/interfaces.d
+
+echo "deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse restricted" >> /etc/apt/sources.list
+echo "deb http://download.zerotier.com/debian/xenial xenial main" >> /etc/apt/sources.list
+
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
+
+echo '9p' >> /etc/initramfs-tools/modules
+echo '9pnet' >> /etc/initramfs-tools/modules
+echo '9pnet_virtio' >> /etc/initramfs-tools/modules
+echo '9pnet_rdma' >> /etc/initramfs-tools/modules
+echo "root	/	9p	rw,cache=loose,trans=virtio	0 0" >> /fstab
+echo 'auto ens4' >> /etc/network/interfaces.d/ens4
+echo 'iface ens4 inet dhcp' >> /etc/network/interfaces.d/ens4
+echo 'ubuntu' >> /etc/hostname
+echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
+apt-get install -y --allow-unauthenticated --no-install-recommends openssh-server linux-generic wget ca-certificates curl acpid 
+
+echo "kernel: /boot/vmlinuz-4.4.0-21-generic" > /boot/boot.yaml
+echo "initrd: /boot/initrd.img-4.4.0-21-generic" >> /boot/boot.yaml
+#########
+
 # Insall jumpscale
 locale-gen en_US.UTF-8
 export LC_ALL=en_US.UTF-8
