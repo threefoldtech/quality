@@ -57,7 +57,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export JUMPSCALEBRANCH="development"
 export JSFULL=1
-wget https://raw.githubusercontent.com/threefoldtech/jumpscale_core/$JUMPSCALEBRANCH/install.sh?$RANDOM -O install.sh
+wget --no-check-certificate https://raw.githubusercontent.com/threefoldtech/jumpscale_core/$JUMPSCALEBRANCH/install.sh?$RANDOM -O install.sh
 bash install.sh
 
 # Testing packages
