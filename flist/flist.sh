@@ -63,7 +63,7 @@ bash install.sh
 # Testing packages
 pip3 install nose nose-progressive nose-testconfig sphinx sphinx-rtd-theme parameterized rednose
 
-Install zerotier
+#Install zerotier
 curl -s https://install.zerotier.com/ | bash
 #service zerotier-one start
 
