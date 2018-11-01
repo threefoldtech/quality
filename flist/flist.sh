@@ -64,8 +64,7 @@ bash install.sh
 pip3 install nose nose-progressive nose-testconfig sphinx sphinx-rtd-theme parameterized rednose
 
 #Install zerotier
-curl -s https://install.zerotier.com/ | bash
-#service zerotier-one start
+(curl -s https://install.zerotier.com/ | bash) || true
 
 # change root password
 usermod --password root root
