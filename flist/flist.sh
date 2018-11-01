@@ -9,34 +9,31 @@ ARCHIVE=/tmp/archives
 FLIST=/tmp/flist
 mkdir -p $ARCHIVE
 
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-echo "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
-echo "export LANG=en_US.UTF-8" >> /root/.bashrc
-echo "export LANGUAGE=en_US.UTF-8" >> /root/.bashrc
-echo " export HOME=/root" >> /root/.bashrc
+printf "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+printf "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
+printf "export LANG=en_US.UTF-8" >> /root/.bashrc
+printf "export LANGUAGE=en_US.UTF-8" >> /root/.bashrc
+printf " export HOME=/root" >> /root/.bashrc
 
 # test
 mkdir -p /etc/initramfs-tools
 mkdir -p /etc/network/interfaces.d
 
-echo "deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse restricted" >> /etc/apt/sources.list
-echo "deb http://download.zerotier.com/debian/xenial xenial main" >> /etc/apt/sources.list
+printf "deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse restricted\n" >> /etc/apt/sources.list
+printf "deb http://download.zerotier.com/debian/xenial xenial main\n" >> /etc/apt/sources.list
 
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
+printf "en_US.UTF-8 UTF-8\n" >> /etc/locale.gen
+printf "en_GB.UTF-8 UTF-8\n" >> /etc/locale.gen
 
-echo '9p' >> /etc/initramfs-tools/modules
-echo '9pnet' >> /etc/initramfs-tools/modules
-echo '9pnet_virtio' >> /etc/initramfs-tools/modules
-echo '9pnet_rdma' >> /etc/initramfs-tools/modules
-echo "root	/	9p	rw,cache=loose,trans=virtio	0 0" >> /fstab
-echo 'auto ens4' >> /etc/network/interfaces.d/ens4
-echo 'iface ens4 inet dhcp' >> /etc/network/interfaces.d/ens4
-echo 'ubuntu' >> /etc/hostname
-echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+printf "9p\n9pnet\n9pnet_virtio\n9pnet_rdma\n" > /tmp/xTremX/etc/initramfs-tools/modules
+printf 'root    /    9p    rw,cache=loose,trans=virtio 0 0\n' > /tmp/xTremX/etc/fstab
+printf 'auto ens4\n' >> /etc/network/interfaces.d/ens4
+printf 'iface ens4 inet dhcp\n' >> /etc/network/interfaces.d/ens4
+printf 'ubuntu' >> /etc/hostname
+printf 'nameserver 8.8.8.8\n' > /etc/resolv.conf
 
-echo "kernel: /boot/vmlinuz-4.4.0-21-generic" > /boot/boot.yaml
-echo "initrd: /boot/initrd.img-4.4.0-21-generic" >> /boot/boot.yaml
+printf "kernel: /boot/vmlinuz-4.4.0-21-generic\n" > /boot/boot.yaml
+printf "initrd: /boot/initrd.img-4.4.0-21-generic\n" >> /boot/boot.yaml
 
 # install system deps
 apt-get update
@@ -72,5 +69,5 @@ usermod --password root root
 wget https://github.com/0xislamtaha.keys -O /root/.ssh/authorized_keys
 rm -rf /.dockerenv
 
-tar -cpzf "/tmp/archives/testing_flist.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc  /
+tar -cpzf "/tmp/archives/testing_flist.tar.gz" /
 
