@@ -25,8 +25,8 @@ printf "deb http://download.zerotier.com/debian/xenial xenial main\n" >> /etc/ap
 printf "en_US.UTF-8 UTF-8\n" >> /etc/locale.gen
 printf "en_GB.UTF-8 UTF-8\n" >> /etc/locale.gen
 
-printf "9p\n9pnet\n9pnet_virtio\n9pnet_rdma\n" > /tmp/xTremX/etc/initramfs-tools/modules
-printf 'root    /    9p    rw,cache=loose,trans=virtio 0 0\n' > /tmp/xTremX/etc/fstab
+printf "9p\n9pnet\n9pnet_virtio\n9pnet_rdma\n" >> /etc/initramfs-tools/modules
+printf 'root    /    9p    rw,cache=loose,trans=virtio 0 0\n' >> /etc/fstab
 printf 'auto ens4\n' >> /etc/network/interfaces.d/ens4
 printf 'iface ens4 inet dhcp\n' >> /etc/network/interfaces.d/ens4
 printf 'ubuntu' >> /etc/hostname
