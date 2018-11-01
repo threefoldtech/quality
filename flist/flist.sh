@@ -11,7 +11,7 @@ mkdir -p $ARCHIVE
 
 # install system deps
 apt-get update
-apt-get install -y --allow-unauthenticated --no-install-recommends curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev openssh-server
+apt-get install -y curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev openssh-server
 # DEBIAN_FRONTEND=noninteractive apt-get install -y linux-image-4.4.0-21-generic systemd-sysv systemd
 
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
