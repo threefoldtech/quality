@@ -5,69 +5,50 @@
 set -ex
 
 # make output directory
-ARCHIVE=/tmp/archives
-FLIST=/tmp/flist
-mkdir -p $ARCHIVE
+mkdir -p /tmp/archives
 
-printf "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-printf "export LC_ALL=en_US.UTF-8" >> /root/.bashrc
-printf "export LANG=en_US.UTF-8" >> /root/.bashrc
-printf "export LANGUAGE=en_US.UTF-8" >> /root/.bashrc
-printf " export HOME=/root" >> /root/.bashrc
+mkdir -p /tmp/xTremX/proc
+mkdir -p /tmp/xTremX/sys
+mkdir -p /tmp/xTremX/dev
+mkdir -p /tmp/xTremX/etc/apt
+mkdir -p /tmp/xTremX/etc/initramfs-tools
+mkdir -p /tmp/xTremX/etc/network/interfaces.d
 
-# test
-mkdir -p /etc/initramfs-tools
-mkdir -p /etc/network/interfaces.d
+mount -o bind /proc /tmp/xTremX/proc
+mount -o bind /sys /tmp/xTremX/sys
+mount -o bind /dev /tmp/xTremX/dev
 
-printf "deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse restricted\n" >> /etc/apt/sources.list
-printf "deb http://download.zerotier.com/debian/xenial xenial main\n" >> /etc/apt/sources.list
+apt-get install -y debootstrap #basic debian system
+debootstrap xenial /tmp/xTremX http://ftp.belnet.be/ubuntu.com/ubuntu
 
-printf "en_US.UTF-8 UTF-8\n" >> /etc/locale.gen
-printf "en_GB.UTF-8 UTF-8\n" >> /etc/locale.gen
+printf "deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse restricted\n" >> /tmp/xTremX/etc/apt/sources.list
+printf "deb http://download.zerotier.com/debian/xenial xenial main\n" >> /tmp/xTremX/etc/apt/sources.list
 
-printf "9p\n9pnet\n9pnet_virtio\n9pnet_rdma\n" >> /etc/initramfs-tools/modules
-printf 'root    /    9p    rw,cache=loose,trans=virtio 0 0\n' >> /etc/fstab
-printf 'auto ens4\n' >> /etc/network/interfaces.d/ens4
-printf 'iface ens4 inet dhcp\n' >> /etc/network/interfaces.d/ens4
-printf 'ubuntu' >> /etc/hostname
-printf 'nameserver 8.8.8.8\n' > /etc/resolv.conf
+printf "en_US.UTF-8 UTF-8\n" >> /tmp/xTremX/etc/locale.gen
+printf "en_GB.UTF-8 UTF-8\n" >> /tmp/xTremX/etc/locale.gen
 
-printf "kernel: /boot/vmlinuz-4.4.0-21-generic\n" > /boot/boot.yaml
-printf "initrd: /boot/initrd.img-4.4.0-21-generic\n" >> /boot/boot.yaml
+printf "9p\n9pnet\n9pnet_virtio\n9pnet_rdma\n" > /tmp/xTremX/etc/initramfs-tools/modules
+printf 'root    /    9p    rw,cache=loose,trans=virtio 0 0\n' > /tmp/xTremX/etc/fstab
+printf 'auto ens4\niface ens4 inet dhcp\n' >> /tmp/xTremX/etc/network/interfaces.d/ens4
+printf 'ubuntu_xTremX\n' > /tmp/xTremX/etc/hostname
+printf 'nameserver 8.8.8.8\n' > /tmp/xTremX/etc/resolv.conf
 
-# install system deps
-apt-get update
-apt-get install -y curl locales git wget netcat tar sudo tmux ssh libffi-dev python3-dev libssl-dev libpython3-dev libssh-dev libsnappy-dev build-essential libvirt-dev libsqlite3-dev openssh-server
-DEBIAN_FRONTEND=noninteractive apt-get install -y linux-image-4.4.0-21-generic systemd-sysv systemd
+chroot /tmp/xTremX bash -c 'locale-gen'
+chroot /tmp/xTremX bash -c 'apt-get update'
+chroot /tmp/xTremX bash -c 'apt-get install -y --allow-unauthenticated --no-install-recommends openssh-server linux-generic wget ca-certificates curl acpid'
+chroot /tmp/xTremX bash -c 'update-initramfs -u'
+#chroot /tmp/xTremX bash -c 'curl -s https://install.zerotier.com/ | bash'
 
-#ssh generate
-ssh-keygen -f ~/.ssh/id_rsa -P ''
-eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa
+printf "kernel: /boot/vmlinuz-4.4.0-21-generic\n" > /tmp/xTremX/boot/boot.yaml
+printf "initrd: /boot/initrd.img-4.4.0-21-generic\n" >> /tmp/xTremX/boot/boot.yaml
 
-# Insall jumpscale
-locale-gen en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export JUMPSCALEBRANCH="development"
-export JSFULL=1
-curl -s https://raw.githubusercontent.com/threefoldtech/jumpscale_core/$JUMPSCALEBRANCH/install.sh?$RANDOM | bash
+chroot /tmp/xTremX bash -c 'printf "root:root" | chpasswd'
 
+umount /tmp/xTremX/proc
+umount /tmp/xTremX/sys
+umount /tmp/xTremX/dev
 
-# Testing packages
-pip3 install nose nose-progressive nose-testconfig sphinx sphinx-rtd-theme parameterized rednose
+rm -rf /tmp/xTremX/var/apt/cache/archives
 
-#Install zerotier
-#(curl -s https://install.zerotier.com/ | bash) || true
-
-# change root password
-usermod --password root root
-
-# start ssh 
-/etc/init.d/ssh start
-wget https://github.com/0xislamtaha.keys -O /root/.ssh/authorized_keys
-rm -rf /.dockerenv
-
-tar -cpzf "/tmp/archives/testing_flist.tar.gz" /
+tar -czpf "/tmp/archives/testing_flist.tar.gz" /tmp/xTremX 
 
