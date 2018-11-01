@@ -70,6 +70,7 @@ usermod --password root root
 # start ssh 
 /etc/init.d/ssh start
 wget https://github.com/0xislamtaha.keys -O /root/.ssh/authorized_keys
+rm -rf /.dockerenv
 
 tar -cpzf "/tmp/archives/testing_flist.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc  /
 
