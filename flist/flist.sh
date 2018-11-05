@@ -50,4 +50,4 @@ umount /tmp/xTremX/dev
 
 rm -rf /tmp/xTremX/var/apt/cache/archives
 
-tar -czpf "/tmp/archives/testing_flist.tar.gz" --exclude /tmp/xTremX/tmp --exclude /tmp/xTremX/dev --exclude /tmp/xTremX/sys --exclude /tmp/xTremX/proc /tmp/xTremX
+tar -czpf "/tmp/archives/testing_flist.tar.gz" --exclude tmp --exclude dev --exclude sys --exclude proc -C /tmp/xTremX .
